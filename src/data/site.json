@@ -1,0 +1,81 @@
+{
+  "siteUrl": "https://locks101.com",
+  "business": {
+    "name": "Locks101",
+    "legalName": "Virginia Security Concepts LLC",
+    "dbaText": "Locks101 is a DBA of Virginia Security Concepts LLC.",
+    "description": "Residential locksmith services by appointment in the greater Williamsburg and Peninsula areas.",
+    "yearsExperience": "30+ years"
+  },
+  "contact": {
+    "phoneDisplay": "(757) 555-0101",
+    "phoneHref": "+17575550101",
+    "email": "service@locks101.com",
+    "availability": "Residential service by appointment",
+    "primaryCta": "Call Now",
+    "secondaryCta": "Email Locks101"
+  },
+  "navigation": [
+    { "label": "Services", "href": "#services" },
+    { "label": "Service Area", "href": "#service-area" },
+    { "label": "About", "href": "#about" },
+    { "label": "Contact", "href": "#contact" }
+  ],
+  "hero": {
+    "eyebrow": "Residential locksmithing",
+    "headline": "Practical locksmith help for Williamsburg-area homes.",
+    "body": "Locks101 focuses on straightforward residential locksmith services, from move-in rekeying to lock repair and hardware upgrades.",
+    "imageUrl": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1600&q=80",
+    "imageAlt": "Residential front door with lock hardware"
+  },
+  "services": {
+    "heading": "Residential Locksmith Services",
+    "intro": "Simple, appointment-based locksmith service for homeowners, renters, landlords, and property managers.",
+    "items": [
+      {
+        "name": "Home rekeying",
+        "description": "Change who has access without replacing every lock, ideal after moving in or changing tenants."
+      },
+      {
+        "name": "Residential lockouts",
+        "description": "Help getting back into the home when keys are lost, broken, or locked inside."
+      },
+      {
+        "name": "Lock repair and replacement",
+        "description": "Repair sticky, worn, or damaged locks, or replace hardware that no longer does the job."
+      },
+      {
+        "name": "Deadbolt installation",
+        "description": "Install or upgrade deadbolts for exterior doors and common residential entry points."
+      },
+      {
+        "name": "Move-in security refresh",
+        "description": "Review and update door hardware after a purchase, lease change, or family transition."
+      },
+      {
+        "name": "Smart lock guidance",
+        "description": "Help selecting and installing residential smart lock hardware where it makes practical sense."
+      }
+    ]
+  },
+  "serviceArea": {
+    "heading": "Serving Greater Williamsburg and the Peninsula",
+    "body": "Locks101 currently serves residential customers by appointment across the greater Williamsburg and Peninsula areas. Call to confirm timing and availability for your address.",
+    "areas": ["Williamsburg", "James City County", "York County", "Newport News", "Hampton", "Poquoson"]
+  },
+  "about": {
+    "heading": "A residential locksmith backed by decades of security experience",
+    "body": "The owner brings more than 30 years of locksmith and security experience to focused residential work. Locks101 keeps the service model intentionally simple: clear communication, practical recommendations, and appointment-based residential locksmithing."
+  },
+  "contactSection": {
+    "heading": "Schedule Residential Locksmith Service",
+    "body": "For rekeying, lock repair, lock replacement, or other residential locksmith needs, call Locks101 to discuss the job and schedule an appointment."
+  },
+  "seo": {
+    "title": "Locks101 | Residential Locksmith Services in Williamsburg, VA",
+    "description": "Locks101 provides appointment-based residential locksmith services for the greater Williamsburg and Peninsula areas, backed by more than 30 years of security experience."
+  },
+  "footer": {
+    "copyright": "All rights reserved."
+  }
+}

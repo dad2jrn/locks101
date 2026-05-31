@@ -1,0 +1,615 @@
+---
+import site from '../data/site.json';
+
+const currentYear = new Date().getFullYear();
+const canonicalUrl = new URL(Astro.url.pathname, site.siteUrl).toString();
+const phoneLabel = `Call ${site.business.name} at ${site.contact.phoneDisplay}`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Locksmith',
+  name: site.business.name,
+  legalName: site.business.legalName,
+  url: site.siteUrl,
+  telephone: site.contact.phoneHref,
+  email: site.contact.email,
+  description: site.business.description,
+  areaServed: site.serviceArea.areas,
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    description: site.contact.availability
+  }
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{site.seo.title}</title>
+    <meta name="description" content={site.seo.description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={site.seo.title} />
+    <meta property="og:description" content={site.seo.description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={site.hero.imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label={`${site.business.name} home`}>
+        <span class="brand-mark">101</span>
+        <span>{site.business.name}</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Page sections">
+        {
+          site.navigation.map((item) => (
+            <a href={item.href}>{item.label}</a>
+          ))
+        }
+      </nav>
+
+      <a class="header-call" href={`tel:${site.contact.phoneHref}`} aria-label={phoneLabel}>
+        {site.contact.primaryCta}
+      </a>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media" aria-hidden="true">
+          <img src={site.hero.imageUrl} alt="" loading="eager" />
+        </div>
+        <div class="hero-content">
+          <p class="eyebrow">{site.hero.eyebrow}</p>
+          <h1 id="hero-title">{site.hero.headline}</h1>
+          <p class="hero-copy">{site.hero.body}</p>
+          <div class="hero-actions" aria-label="Primary contact actions">
+            <a class="button primary" href={`tel:${site.contact.phoneHref}`} aria-label={phoneLabel}>
+              {site.contact.primaryCta}
+            </a>
+            <a class="button secondary" href="#services">View Services</a>
+          </div>
+          <dl class="proof-points" aria-label="Business highlights">
+            <div>
+              <dt>Experience</dt>
+              <dd>{site.business.yearsExperience}</dd>
+            </div>
+            <div>
+              <dt>Service</dt>
+              <dd>{site.contact.availability}</dd>
+            </div>
+            <div>
+              <dt>Area</dt>
+              <dd>Greater Williamsburg / Peninsula</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="section section-light" id="services" aria-labelledby="services-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="eyebrow">What we do</p>
+            <h2 id="services-title">{site.services.heading}</h2>
+            <p>{site.services.intro}</p>
+          </div>
+          <div class="service-grid">
+            {
+              site.services.items.map((service) => (
+                <article class="service-card">
+                  <h3>{service.name}</h3>
+                  <p>{service.description}</p>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="service-area" aria-labelledby="area-title">
+        <div class="split">
+          <div>
+            <p class="eyebrow">Where we work</p>
+            <h2 id="area-title">{site.serviceArea.heading}</h2>
+            <p>{site.serviceArea.body}</p>
+          </div>
+          <ul class="area-list" aria-label="Service area examples">
+            {site.serviceArea.areas.map((area) => <li>{area}</li>)}
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section-warm" id="about" aria-labelledby="about-title">
+        <div class="split">
+          <div>
+            <p class="eyebrow">Why Locks101</p>
+            <h2 id="about-title">{site.about.heading}</h2>
+          </div>
+          <div class="about-copy">
+            <p>{site.about.body}</p>
+            <p class="experience-callout">{site.business.yearsExperience} in locksmith and security work.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-section" id="contact" aria-labelledby="contact-title">
+        <div class="contact-panel">
+          <div>
+            <p class="eyebrow">Contact</p>
+            <h2 id="contact-title">{site.contactSection.heading}</h2>
+            <p>{site.contactSection.body}</p>
+          </div>
+          <div class="contact-actions">
+            <a class="button primary" href={`tel:${site.contact.phoneHref}`} aria-label={phoneLabel}>
+              {site.contact.phoneDisplay}
+            </a>
+            <a class="button secondary" href={`mailto:${site.contact.email}`}>{site.contact.secondaryCta}</a>
+            <p>{site.contact.availability}</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>{site.business.dbaText}</p>
+      <p>&copy; {currentYear} {site.business.name}. {site.footer.copyright}</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  :root {
+    --ink: #24312d;
+    --muted: #5f6e68;
+    --cream: #f8f2e8;
+    --paper: #fffaf2;
+    --line: #e4d7c3;
+    --cedar: #87542f;
+    --cedar-dark: #603a22;
+    --sage: #63786b;
+    --sage-dark: #34483d;
+    --white: #ffffff;
+    --shadow: 0 18px 45px rgba(39, 49, 45, 0.14);
+    color-scheme: light;
+    font-family:
+      Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  h1 {
+    max-width: 780px;
+    margin-bottom: 1rem;
+    font-size: clamp(2.45rem, 8vw, 5.6rem);
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+  }
+
+  h3 {
+    margin-bottom: 0.7rem;
+    font-size: 1.2rem;
+  }
+
+  p {
+    color: var(--muted);
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 0.8rem clamp(1rem, 4vw, 3rem);
+    border-bottom: 1px solid rgba(228, 215, 195, 0.88);
+    background: rgba(255, 250, 242, 0.94);
+    backdrop-filter: blur(12px);
+  }
+
+  .brand {
+    display: inline-flex;
+    gap: 0.65rem;
+    align-items: center;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    display: inline-grid;
+    width: 2.45rem;
+    height: 2.45rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--sage-dark);
+    color: var(--white);
+    font-size: 0.78rem;
+  }
+
+  .site-nav {
+    display: flex;
+    gap: clamp(0.7rem, 2vw, 1.6rem);
+    justify-content: center;
+    font-size: 0.95rem;
+  }
+
+  .site-nav a {
+    color: var(--muted);
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .site-nav a:hover,
+  .site-nav a:focus-visible {
+    color: var(--cedar-dark);
+  }
+
+  .header-call,
+  .button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .header-call {
+    padding: 0.65rem 1rem;
+    background: var(--cedar);
+    color: var(--white);
+  }
+
+  .button {
+    padding: 0.9rem 1.25rem;
+  }
+
+  .button.primary {
+    background: var(--cedar);
+    color: var(--white);
+    box-shadow: 0 12px 28px rgba(96, 58, 34, 0.24);
+  }
+
+  .button.secondary {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--ink);
+  }
+
+  .hero {
+    position: relative;
+    display: grid;
+    min-height: calc(100svh - 70px);
+    overflow: hidden;
+    align-items: end;
+    isolation: isolate;
+  }
+
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+
+  .hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, rgba(255, 250, 242, 0.96) 0%, rgba(255, 250, 242, 0.84) 42%, rgba(255, 250, 242, 0.25) 100%),
+      linear-gradient(0deg, rgba(36, 49, 45, 0.26), rgba(36, 49, 45, 0));
+    content: "";
+  }
+
+  .hero-content {
+    width: min(1180px, 100%);
+    padding: clamp(4rem, 11vw, 8rem) clamp(1.2rem, 5vw, 4rem) 2.4rem;
+  }
+
+  .eyebrow {
+    margin-bottom: 0.7rem;
+    color: var(--cedar-dark);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .hero-copy {
+    max-width: 620px;
+    margin-bottom: 1.4rem;
+    color: #405049;
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: clamp(2rem, 5vw, 4rem);
+  }
+
+  .proof-points {
+    display: grid;
+    max-width: 900px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    overflow: hidden;
+    border: 1px solid rgba(228, 215, 195, 0.9);
+    border-radius: 8px;
+    background: rgba(255, 250, 242, 0.88);
+    box-shadow: var(--shadow);
+  }
+
+  .proof-points div {
+    padding: 1rem;
+    border-right: 1px solid rgba(228, 215, 195, 0.9);
+  }
+
+  .proof-points div:last-child {
+    border-right: 0;
+  }
+
+  .proof-points dt {
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .proof-points dd {
+    margin: 0.2rem 0 0;
+    color: var(--ink);
+    font-weight: 850;
+  }
+
+  .section {
+    scroll-margin-top: 5.5rem;
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.2rem, 5vw, 4rem);
+  }
+
+  .section-light {
+    background: var(--white);
+  }
+
+  .section-warm {
+    background: var(--cream);
+  }
+
+  .section-inner,
+  .split,
+  .contact-panel {
+    width: min(1120px, 100%);
+    margin: 0 auto;
+  }
+
+  .section-heading {
+    max-width: 720px;
+    margin-bottom: 2rem;
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .service-card {
+    min-height: 190px;
+    padding: 1.3rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .area-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .area-list li {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--sage-dark);
+    font-weight: 750;
+  }
+
+  .about-copy {
+    padding-top: 0.35rem;
+  }
+
+  .experience-callout {
+    margin-top: 1.4rem;
+    color: var(--cedar-dark);
+    font-size: 1.35rem;
+    font-weight: 850;
+  }
+
+  .contact-section {
+    scroll-margin-top: 5.5rem;
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.2rem, 5vw, 4rem);
+    background: var(--sage-dark);
+  }
+
+  .contact-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
+    gap: 2rem;
+    align-items: center;
+    padding: clamp(1.5rem, 5vw, 3rem);
+    border-radius: 8px;
+    background: var(--paper);
+    box-shadow: var(--shadow);
+  }
+
+  .contact-actions {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .contact-actions p {
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  .site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem 1.5rem;
+    justify-content: space-between;
+    padding: 1.5rem clamp(1.2rem, 5vw, 4rem);
+    background: #1f2a26;
+    color: rgba(255, 255, 255, 0.86);
+  }
+
+  .site-footer p {
+    margin: 0;
+    color: inherit;
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 860px) {
+    .site-header {
+      grid-template-columns: 1fr auto;
+      gap: 0.8rem;
+    }
+
+    .site-nav {
+      grid-column: 1 / -1;
+      order: 3;
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-bottom: 0.1rem;
+    }
+
+    .hero {
+      min-height: auto;
+    }
+
+    .hero-content {
+      padding-top: 4.5rem;
+    }
+
+    .hero::after {
+      background: linear-gradient(90deg, rgba(255, 250, 242, 0.98) 0%, rgba(255, 250, 242, 0.9) 64%, rgba(255, 250, 242, 0.68) 100%);
+    }
+
+    .proof-points,
+    .service-grid,
+    .split,
+    .contact-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .proof-points div {
+      border-right: 0;
+      border-bottom: 1px solid rgba(228, 215, 195, 0.9);
+    }
+
+    .proof-points div:last-child {
+      border-bottom: 0;
+    }
+
+    .service-card {
+      min-height: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    h1 {
+      font-size: 2.45rem;
+    }
+
+    .site-header {
+      padding-inline: 0.85rem;
+    }
+
+    .brand-mark {
+      width: 2.15rem;
+      height: 2.15rem;
+    }
+
+    .header-call {
+      min-height: 2.4rem;
+      padding: 0.55rem 0.8rem;
+      font-size: 0.88rem;
+    }
+
+    .hero-actions,
+    .contact-actions {
+      align-items: stretch;
+    }
+
+    .button {
+      width: 100%;
+      white-space: normal;
+      text-align: center;
+    }
+
+    .area-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
