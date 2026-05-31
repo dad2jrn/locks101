@@ -102,6 +102,16 @@ const jsonLd = {
                 <article class="service-card">
                   <h3>{service.name}</h3>
                   <p>{service.description}</p>
+                  {
+                    service.cta && (
+                      <div class="service-card-cta">
+                        <a class="service-emergency-call" href={`tel:${site.contact.phoneHref}`} aria-label={`${service.cta.label} at ${site.contact.phoneDisplay}`}>
+                          {service.cta.label}
+                        </a>
+                        <p>{service.cta.note}</p>
+                      </div>
+                    )
+                  }
                 </article>
               ))
             }
@@ -123,12 +133,13 @@ const jsonLd = {
       </section>
 
       <section class="section section-warm" id="about" aria-labelledby="about-title">
-        <div class="split">
+        <div class="split about-split">
           <div>
             <p class="eyebrow">Why Locks101</p>
             <h2 id="about-title">{site.about.heading}</h2>
           </div>
           <div class="about-copy">
+            <img class="brand-mark-art" src="/favicon.svg" alt="" loading="lazy" aria-hidden="true" />
             <p>{site.about.body}</p>
             <p class="experience-callout">{site.business.yearsExperience} in locksmith and security work.</p>
           </div>
@@ -255,7 +266,7 @@ const jsonLd = {
 
   .brand img {
     width: auto;
-    height: clamp(3.4rem, 6vw, 4.5rem);
+    height: clamp(4.5rem, 8vw, 6.4rem);
   }
 
   .site-nav {
@@ -435,11 +446,41 @@ const jsonLd = {
   }
 
   .service-card {
+    display: flex;
+    flex-direction: column;
     min-height: 190px;
     padding: 1.3rem;
     border: 1px solid var(--line);
     border-radius: 8px;
     background: var(--paper);
+  }
+
+  .service-card-cta {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  .service-card-cta p {
+    margin-bottom: 0;
+    color: var(--cedar-dark);
+    font-size: 0.88rem;
+    font-weight: 750;
+  }
+
+  .service-emergency-call {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--cedar);
+    color: var(--white);
+    font-size: 0.92rem;
+    font-weight: 850;
+    text-align: center;
+    text-decoration: none;
   }
 
   .split {
@@ -468,7 +509,17 @@ const jsonLd = {
   }
 
   .about-copy {
+    position: relative;
+    overflow: hidden;
     padding-top: 0.35rem;
+  }
+
+  .brand-mark-art {
+    float: right;
+    width: clamp(8.5rem, 20vw, 14rem);
+    height: auto;
+    margin: 0 0 1rem 1.4rem;
+    opacity: 0.94;
   }
 
   .experience-callout {
@@ -527,6 +578,10 @@ const jsonLd = {
       gap: 0.8rem;
     }
 
+    .brand img {
+      height: 4rem;
+    }
+
     .site-nav {
       grid-column: 1 / -1;
       order: 3;
@@ -578,7 +633,13 @@ const jsonLd = {
     }
 
     .brand img {
-      height: 3.15rem;
+      height: 3.55rem;
+    }
+
+    .brand-mark-art {
+      float: none;
+      width: min(12rem, 72vw);
+      margin: 0 auto 1.2rem;
     }
 
     .header-call {

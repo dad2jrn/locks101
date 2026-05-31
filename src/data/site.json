@@ -40,7 +40,11 @@
       },
       {
         "name": "Residential lockouts",
-        "description": "Help getting back into the home when keys are lost, broken, or locked inside."
+        "description": "Help getting back into the home when keys are lost, broken, or locked inside.",
+        "cta": {
+          "label": "Emergency Lockout? Call Now",
+          "note": "For emergency lockout situations only."
+        }
       },
       {
         "name": "Lock repair and replacement",
