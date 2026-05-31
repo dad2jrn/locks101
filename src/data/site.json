@@ -1,12 +1,13 @@
 {
-  "siteUrl": "https://locks101.com",
+  "siteUrl": "https://dad2jrn.github.io/locks101",
+  "basePath": "/locks101",
   "business": {
     "name": "Locks101",
     "legalName": "Virginia Security Concepts LLC",
     "dbaText": "Locks101 is a DBA of Virginia Security Concepts LLC.",
     "description": "Residential locksmith services by appointment in the greater Williamsburg and Peninsula areas.",
     "yearsExperience": "30+ years",
-    "logoUrl": "/locks101-logo.svg",
+    "logoUrl": "locks101-logo.svg",
     "logoAlt": "Locks101 Locksmith"
   },
   "contact": {

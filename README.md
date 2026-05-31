@@ -15,6 +15,7 @@ Common edits:
 - `services.items` controls the residential service cards.
 - `serviceArea.body` and `serviceArea.areas` control service-area wording.
 - `siteUrl` controls production metadata and should be updated if the final domain changes.
+- `basePath` controls the GitHub Pages project path. Use `/locks101` for `https://dad2jrn.github.io/locks101/`; use an empty string for a root custom domain.
 - `hero.imageUrl` controls the main licensed stock image.
 
 After editing, run:
@@ -34,4 +35,4 @@ npm run dev
 
 The GitHub Actions workflow in `.github/workflows/deploy.yml` builds the Astro site and publishes it to GitHub Pages.
 
-In the GitHub repository settings, set Pages to use GitHub Actions as the source. When the final domain is confirmed, configure the custom domain in GitHub Pages settings and update `siteUrl` in `src/data/site.json`.
+In the GitHub repository settings, set Pages to use GitHub Actions as the source. When the final domain is confirmed, configure the custom domain in GitHub Pages settings, update `siteUrl` in `src/data/site.json`, and set `basePath` to an empty string if the site is served from the domain root.
