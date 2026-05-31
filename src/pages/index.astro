@@ -41,8 +41,7 @@ const jsonLd = {
   <body>
     <header class="site-header">
       <a class="brand" href="#top" aria-label={`${site.business.name} home`}>
-        <span class="brand-mark">101</span>
-        <span>{site.business.name}</span>
+        <img src={site.business.logoUrl} alt={site.business.logoAlt} width="628" height="502" />
       </a>
 
       <nav class="site-nav" aria-label="Page sections">
@@ -250,21 +249,13 @@ const jsonLd = {
 
   .brand {
     display: inline-flex;
-    gap: 0.65rem;
     align-items: center;
-    font-weight: 800;
     text-decoration: none;
   }
 
-  .brand-mark {
-    display: inline-grid;
-    width: 2.45rem;
-    height: 2.45rem;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--sage-dark);
-    color: var(--white);
-    font-size: 0.78rem;
+  .brand img {
+    width: auto;
+    height: clamp(3.4rem, 6vw, 4.5rem);
   }
 
   .site-nav {
@@ -586,9 +577,8 @@ const jsonLd = {
       padding-inline: 0.85rem;
     }
 
-    .brand-mark {
-      width: 2.15rem;
-      height: 2.15rem;
+    .brand img {
+      height: 3.15rem;
     }
 
     .header-call {

@@ -5,11 +5,13 @@
     "legalName": "Virginia Security Concepts LLC",
     "dbaText": "Locks101 is a DBA of Virginia Security Concepts LLC.",
     "description": "Residential locksmith services by appointment in the greater Williamsburg and Peninsula areas.",
-    "yearsExperience": "30+ years"
+    "yearsExperience": "30+ years",
+    "logoUrl": "/locks101-logo.svg",
+    "logoAlt": "Locks101 Locksmith"
   },
   "contact": {
-    "phoneDisplay": "(757) 555-0101",
-    "phoneHref": "+17575550101",
+    "phoneDisplay": "(757) 703-6425",
+    "phoneHref": "+17577036425",
     "email": "service@locks101.com",
     "availability": "Residential service by appointment",
     "primaryCta": "Call Now",
