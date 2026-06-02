@@ -51,13 +51,16 @@ const jsonLd = {
       <nav class="site-nav" aria-label="Page sections">
         {
           site.navigation.map((item) => (
-            <a href={item.href}>{item.label}</a>
+            <a href={item.href} data-section={item.href.replace('#', '')}>{item.label}</a>
           ))
         }
       </nav>
 
-      <a class="header-call" href={`tel:${site.contact.phoneHref}`} aria-label={phoneLabel}>
-        {site.contact.primaryCta}
+      <a class="header-call animated-button" href={`tel:${site.contact.phoneHref}`} aria-label={phoneLabel}>
+        <span class="button-text-wrap">
+          <span class="button-text">{site.contact.primaryCta}</span>
+          <span class="button-text-hover" aria-hidden="true">{site.contact.primaryCta}</span>
+        </span>
       </a>
     </header>
 
@@ -71,10 +74,18 @@ const jsonLd = {
           <h1 id="hero-title">{site.hero.headline}</h1>
           <p class="hero-copy">{site.hero.body}</p>
           <div class="hero-actions" aria-label="Primary contact actions">
-            <a class="button primary" href={`tel:${site.contact.phoneHref}`} aria-label={phoneLabel}>
-              {site.contact.primaryCta}
+            <a class="button primary animated-button" href={`tel:${site.contact.phoneHref}`} aria-label={phoneLabel}>
+              <span class="button-text-wrap">
+                <span class="button-text">{site.contact.primaryCta}</span>
+                <span class="button-text-hover" aria-hidden="true">{site.contact.primaryCta}</span>
+              </span>
             </a>
-            <a class="button secondary" href="#services">View Services</a>
+            <a class="button secondary animated-button" href="#services">
+              <span class="button-text-wrap">
+                <span class="button-text">View Services</span>
+                <span class="button-text-hover" aria-hidden="true">View Services</span>
+              </span>
+            </a>
           </div>
           <dl class="proof-points" aria-label="Business highlights">
             <div>
@@ -109,8 +120,11 @@ const jsonLd = {
                   {
                     service.cta && (
                       <div class="service-card-cta">
-                        <a class="service-emergency-call" href={`tel:${site.contact.phoneHref}`} aria-label={`${service.cta.label} at ${site.contact.phoneDisplay}`}>
-                          {service.cta.label}
+                        <a class="service-emergency-call animated-button" href={`tel:${site.contact.phoneHref}`} aria-label={`${service.cta.label} at ${site.contact.phoneDisplay}`}>
+                          <span class="button-text-wrap">
+                            <span class="button-text">{service.cta.label}</span>
+                            <span class="button-text-hover" aria-hidden="true">{service.cta.label}</span>
+                          </span>
                         </a>
                         <p>{service.cta.note}</p>
                       </div>
@@ -158,10 +172,18 @@ const jsonLd = {
             <p>{site.contactSection.body}</p>
           </div>
           <div class="contact-actions">
-            <a class="button primary" href={`tel:${site.contact.phoneHref}`} aria-label={phoneLabel}>
-              {site.contact.phoneDisplay}
+            <a class="button primary animated-button" href={`tel:${site.contact.phoneHref}`} aria-label={phoneLabel}>
+              <span class="button-text-wrap">
+                <span class="button-text">{site.contact.phoneDisplay}</span>
+                <span class="button-text-hover" aria-hidden="true">{site.contact.phoneDisplay}</span>
+              </span>
             </a>
-            <a class="button secondary" href={`mailto:${site.contact.email}`}>{site.contact.secondaryCta}</a>
+            <a class="button secondary animated-button" href={`mailto:${site.contact.email}`}>
+              <span class="button-text-wrap">
+                <span class="button-text">{site.contact.secondaryCta}</span>
+                <span class="button-text-hover" aria-hidden="true">{site.contact.secondaryCta}</span>
+              </span>
+            </a>
             <p>{site.contact.availability}</p>
           </div>
         </div>
@@ -172,6 +194,45 @@ const jsonLd = {
       <p>{site.business.dbaText}</p>
       <p>&copy; {currentYear} {site.business.name}. {site.footer.copyright}</p>
     </footer>
+    <script>
+      const navLinks = Array.from(document.querySelectorAll('.site-nav a[data-section]'));
+      const sections = navLinks
+        .map((link) => document.getElementById(link.dataset.section || ''))
+        .filter(Boolean);
+
+      const setActiveNav = (sectionId) => {
+        navLinks.forEach((link) => {
+          const isActive = link.dataset.section === sectionId;
+          link.toggleAttribute('aria-current', isActive);
+        });
+      };
+
+      navLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+          if (link.dataset.section) {
+            setActiveNav(link.dataset.section);
+          }
+        });
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+          if (visible?.target.id) {
+            setActiveNav(visible.target.id);
+          }
+        },
+        {
+          rootMargin: '-35% 0px -45% 0px',
+          threshold: [0.05, 0.2, 0.4, 0.6]
+        }
+      );
+
+      sections.forEach((section) => observer.observe(section));
+    </script>
   </body>
 </html>
 
@@ -281,14 +342,38 @@ const jsonLd = {
   }
 
   .site-nav a {
+    position: relative;
+    padding: 0.35rem 0;
     color: var(--muted);
     font-weight: 650;
     text-decoration: none;
+    transition: color 180ms ease;
+  }
+
+  .site-nav a::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--cedar), var(--sage));
+    content: "";
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 220ms ease;
   }
 
   .site-nav a:hover,
-  .site-nav a:focus-visible {
+  .site-nav a:focus-visible,
+  .site-nav a[aria-current="true"] {
     color: var(--cedar-dark);
+  }
+
+  .site-nav a:hover::after,
+  .site-nav a:focus-visible::after,
+  .site-nav a[aria-current="true"]::after {
+    transform: scaleX(1);
   }
 
   .header-call,
@@ -303,10 +388,92 @@ const jsonLd = {
     white-space: nowrap;
   }
 
+  .animated-button {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      border-color 220ms ease;
+  }
+
+  .animated-button::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, rgba(255, 250, 242, 0.24), rgba(255, 250, 242, 0.08));
+    content: "";
+    transition: width 360ms ease;
+  }
+
+  .animated-button::after {
+    position: absolute;
+    inset: 1px;
+    z-index: -2;
+    border-radius: inherit;
+    background: linear-gradient(90deg, rgba(135, 84, 47, 0.5), rgba(99, 120, 107, 0.5));
+    content: "";
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  .animated-button:hover,
+  .animated-button:focus-visible {
+    transform: translateY(-2px);
+  }
+
+  .animated-button:hover::before,
+  .animated-button:focus-visible::before {
+    width: 100%;
+  }
+
+  .animated-button:hover::after,
+  .animated-button:focus-visible::after {
+    opacity: 1;
+  }
+
+  .animated-button:active {
+    transform: translateY(0);
+  }
+
+  .button-text-wrap {
+    position: relative;
+    z-index: 1;
+    display: block;
+    overflow: hidden;
+    line-height: 1.25;
+  }
+
+  .button-text,
+  .button-text-hover {
+    display: block;
+    transition: transform 300ms ease;
+  }
+
+  .button-text-hover {
+    position: absolute;
+    inset: 0;
+    transform: translateY(110%);
+  }
+
+  .animated-button:hover .button-text,
+  .animated-button:focus-visible .button-text {
+    transform: translateY(-110%);
+  }
+
+  .animated-button:hover .button-text-hover,
+  .animated-button:focus-visible .button-text-hover {
+    transform: translateY(0);
+  }
+
   .header-call {
     padding: 0.65rem 1rem;
     background: var(--cedar);
     color: var(--white);
+    box-shadow: 0 8px 22px rgba(96, 58, 34, 0.16);
   }
 
   .button {
@@ -323,6 +490,16 @@ const jsonLd = {
     border: 1px solid var(--line);
     background: rgba(255, 255, 255, 0.72);
     color: var(--ink);
+  }
+
+  .button.secondary::before {
+    background: linear-gradient(90deg, rgba(99, 120, 107, 0.14), rgba(135, 84, 47, 0.12));
+  }
+
+  .button.secondary:hover,
+  .button.secondary:focus-visible {
+    border-color: rgba(135, 84, 47, 0.42);
+    box-shadow: 0 12px 28px rgba(52, 72, 61, 0.12);
   }
 
   .hero {
@@ -485,6 +662,7 @@ const jsonLd = {
     font-weight: 850;
     text-align: center;
     text-decoration: none;
+    box-shadow: 0 10px 22px rgba(96, 58, 34, 0.2);
   }
 
   .split {
@@ -666,6 +844,31 @@ const jsonLd = {
 
     .area-list {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animated-button,
+    .animated-button::before,
+    .animated-button::after,
+    .site-nav a,
+    .site-nav a::after,
+    .button-text,
+    .button-text-hover {
+      transition: none;
+    }
+
+    .animated-button:hover,
+    .animated-button:focus-visible,
+    .animated-button:hover .button-text,
+    .animated-button:focus-visible .button-text,
+    .animated-button:hover .button-text-hover,
+    .animated-button:focus-visible .button-text-hover {
+      transform: none;
+    }
+
+    .button-text-hover {
+      display: none;
     }
   }
 </style>
