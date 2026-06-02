@@ -12,6 +12,10 @@ const heroImage =
   site.images.heroOptions[site.hero.imageKey]?.enabled
     ? site.images.heroOptions[site.hero.imageKey]
     : heroOptions.find((image) => image.enabled) ?? heroOptions[0];
+const schedulerEmbed = site.scheduling.embed;
+const schedulerFrameStyle = schedulerEmbed
+  ? `--scheduler-view-height: ${schedulerEmbed.viewportHeight}; --scheduler-frame-height: ${schedulerEmbed.iframeHeight}; --scheduler-frame-offset-y: ${schedulerEmbed.offsetY};`
+  : undefined;
 const canonicalUrl = site.siteUrl.endsWith('/') ? site.siteUrl : `${site.siteUrl}/`;
 const phoneLabel = `Call ${site.business.name} at ${site.contact.phoneDisplay}`;
 const jsonLd = {
@@ -169,6 +173,40 @@ const jsonLd = {
           </div>
         </div>
       </section>
+
+      {
+        site.scheduling.enabled && (
+          <section class="section section-light" id="schedule" aria-labelledby="schedule-title">
+            <div class="section-inner">
+              <div class="section-heading">
+                <p class="eyebrow">Schedule</p>
+                <h2 id="schedule-title">{site.scheduling.heading}</h2>
+                <p>{site.scheduling.body}</p>
+              </div>
+              <div
+                class={`scheduler-frame-wrap${schedulerEmbed?.crop ? ' scheduler-frame-wrap-cropped' : ''}`}
+                style={schedulerFrameStyle}
+              >
+                <iframe
+                  src={site.scheduling.url}
+                  title={`${site.business.name} appointment scheduler`}
+                  loading="lazy"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  scrolling={schedulerEmbed?.lockScroll ? 'no' : 'auto'}
+                />
+              </div>
+              <div class="scheduler-fallback">
+                <a class="button secondary animated-button" href={site.scheduling.url} target="_blank" rel="noopener noreferrer">
+                  <span class="button-text-wrap">
+                    <span class="button-text">{site.scheduling.fallbackLabel}</span>
+                    <span class="button-text-hover" aria-hidden="true">{site.scheduling.fallbackLabel}</span>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </section>
+        )
+      }
 
       <section class="contact-section" id="contact" aria-labelledby="contact-title">
         <div class="contact-panel">
@@ -678,6 +716,40 @@ const jsonLd = {
     align-items: start;
   }
 
+  .scheduler-frame-wrap {
+    max-width: 74rem;
+    margin-inline: auto;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+  }
+
+  .scheduler-frame-wrap-cropped {
+    height: var(--scheduler-view-height, 46rem);
+  }
+
+  .scheduler-frame-wrap iframe {
+    display: block;
+    width: 100%;
+    height: min(78rem, 82vh);
+    min-height: 42rem;
+    border: 0;
+  }
+
+  .scheduler-frame-wrap-cropped iframe {
+    height: var(--scheduler-frame-height, 78rem);
+    min-height: var(--scheduler-frame-height, 78rem);
+    transform: translateY(var(--scheduler-frame-offset-y, -10.5rem));
+  }
+
+  .scheduler-fallback {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
   .area-list {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -810,6 +882,10 @@ const jsonLd = {
     .service-card {
       min-height: 0;
     }
+
+    .scheduler-frame-wrap:not(.scheduler-frame-wrap-cropped) iframe {
+      min-height: 38rem;
+    }
   }
 
   @media (max-width: 560px) {
@@ -850,6 +926,15 @@ const jsonLd = {
 
     .area-list {
       grid-template-columns: 1fr;
+    }
+
+    .scheduler-frame-wrap:not(.scheduler-frame-wrap-cropped) iframe {
+      height: 42rem;
+      min-height: 42rem;
+    }
+
+    .scheduler-frame-wrap-cropped {
+      height: min(var(--scheduler-view-height, 46rem), 40rem);
     }
   }
 

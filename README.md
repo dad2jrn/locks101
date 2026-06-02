@@ -21,6 +21,11 @@ Common edits:
 - `images.heroOptions` lists available hero images.
 - `hero.imageKey` chooses which image from `images.heroOptions` appears in the hero.
 - Set `enabled` to `false` on a hero option to keep it in the config but prevent it from being selected.
+- `scheduling.enabled` shows or hides the appointment scheduling section.
+- `scheduling.url` controls the embedded booking calendar and fallback scheduler link.
+- `scheduling.embed.crop` clips the embedded scheduler so it feels more native to the page.
+- `scheduling.embed.offsetY`, `viewportHeight`, and `iframeHeight` tune how much of the remote scheduler is visible.
+- `scheduling.embed.lockScroll` disables internal iframe scrolling; keep the fallback scheduler link visible in case Wix content is clipped too tightly.
 
 After editing, run:
 

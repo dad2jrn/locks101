@@ -52,6 +52,7 @@
     { "label": "Services", "href": "#services" },
     { "label": "Service Area", "href": "#service-area" },
     { "label": "About", "href": "#about" },
+    { "label": "Schedule", "href": "#schedule" },
     { "label": "Contact", "href": "#contact" }
   ],
   "hero": {
@@ -106,6 +107,20 @@
   "contactSection": {
     "heading": "Schedule Residential Locksmith Service",
     "body": "For rekeying, lock repair, lock replacement, or other residential locksmith needs, call Locks101 to discuss the job and schedule an appointment."
+  },
+  "scheduling": {
+    "enabled": true,
+    "heading": "Request an Appointment",
+    "body": "Use the booking calendar below to request residential locksmith service. If the embedded calendar does not load, open the scheduler in a new tab.",
+    "url": "https://www.virginiasecurityconcepts.net/booking-calendar/locksmith-services-1?referral=service_list_widget",
+    "fallbackLabel": "Open Scheduler",
+    "embed": {
+      "crop": true,
+      "lockScroll": true,
+      "viewportHeight": "39rem",
+      "iframeHeight": "104rem",
+      "offsetY": "-33rem"
+    }
   },
   "seo": {
     "title": "Locks101 | Residential Locksmith Services in Williamsburg, VA",
