@@ -16,7 +16,11 @@ Common edits:
 - `serviceArea.body` and `serviceArea.areas` control service-area wording.
 - `siteUrl` controls production metadata and should be updated if the final domain changes.
 - `basePath` controls the GitHub Pages project path. Use `/locks101` for `https://dad2jrn.github.io/locks101/`; use an empty string for a root custom domain.
-- `hero.imageUrl` controls the main licensed stock image.
+- `images.logo` controls the header logo.
+- `images.brandMark` controls the favicon and decorative mark in the About section.
+- `images.heroOptions` lists available hero images.
+- `hero.imageKey` chooses which image from `images.heroOptions` appears in the hero.
+- Set `enabled` to `false` on a hero option to keep it in the config but prevent it from being selected.
 
 After editing, run:
 

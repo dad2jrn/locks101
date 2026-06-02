@@ -1,14 +1,44 @@
 {
   "siteUrl": "https://dad2jrn.github.io/locks101",
   "basePath": "/locks101",
+  "images": {
+    "logo": {
+      "src": "locks101-logo.svg",
+      "alt": "Locks101 Locksmith"
+    },
+    "brandMark": {
+      "src": "favicon.svg",
+      "alt": "Locks101 key mark"
+    },
+    "heroOptions": {
+      "doorHandleGlass": {
+        "enabled": true,
+        "src": "https://images.unsplash.com/photo-1680727518491-bd54a9e702ef?auto=format&fit=crop&w=1600&q=80",
+        "alt": "Close-up of a door handle on a glass door",
+        "sourceUrl": "https://unsplash.com/photos/a-close-up-of-a-door-handle-on-a-glass-door-ZwnPD2c2h3o",
+        "credit": "Derek Pell / Unsplash"
+      },
+      "residentialFrontDoor": {
+        "enabled": false,
+        "src": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1600&q=80",
+        "alt": "Residential front door with lock hardware",
+        "credit": "Unsplash"
+      },
+      "grayHouseRedFlowers": {
+        "enabled": false,
+        "src": "https://images.unsplash.com/photo-1609757754057-8a8e17eb73b2?auto=format&fit=crop&w=1600&q=80",
+        "alt": "Gray concrete house with red flowers on the side",
+        "sourceUrl": "https://unsplash.com/photos/gray-concrete-house-with-red-flowers-on-the-side-HEHjFvFHpr8",
+        "credit": "Doug Vos / Unsplash"
+      }
+    }
+  },
   "business": {
     "name": "Locks101",
     "legalName": "Virginia Security Concepts LLC",
     "dbaText": "Locks101 is a DBA of Virginia Security Concepts LLC.",
     "description": "Residential locksmith services by appointment in the greater Williamsburg and Peninsula areas.",
-    "yearsExperience": "30+ years",
-    "logoUrl": "locks101-logo.svg",
-    "logoAlt": "Locks101 Locksmith"
+    "yearsExperience": "30+ years"
   },
   "contact": {
     "phoneDisplay": "(757) 703-6425",
@@ -28,8 +58,7 @@
     "eyebrow": "Residential locksmithing",
     "headline": "Practical locksmith help for Williamsburg-area homes.",
     "body": "Locks101 focuses on straightforward residential locksmith services, from move-in rekeying to lock repair and hardware upgrades.",
-    "imageUrl": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1600&q=80",
-    "imageAlt": "Residential front door with lock hardware"
+    "imageKey": "doorHandleGlass"
   },
   "services": {
     "heading": "Residential Locksmith Services",
